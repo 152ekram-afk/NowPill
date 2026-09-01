@@ -14,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryController
@@ -105,8 +105,8 @@ class PillOverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner {
             y = 80
         }
 
-        val view = ComposeView(this).apply {
-            ViewTreeLifecycleOwner.set(this, this@PillOverlayService)
+       val view = ComposeView(this).apply {
+            setViewTreeLifecycleOwner(this@PillOverlayService)
             setViewTreeSavedStateRegistryOwner(this@PillOverlayService)
             setContent {
                 val settings by settingsRepo.settingsFlow.collectAsState(initial = com.nowpill.app.PillSettingsState())
